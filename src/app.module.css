@@ -1,0 +1,16 @@
+.main {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aliceblue;
+}
+
+.window {
+  padding: 160px;
+  display: flex;
+  gap: 70px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: -18px 18px 23px 0px rgba(34, 60, 80, 0.2);
+}

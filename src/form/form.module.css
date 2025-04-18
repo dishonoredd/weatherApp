@@ -1,0 +1,30 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.btn {
+  background-color: rgb(123, 180, 255);
+  padding: 10px;
+  border: 1px solid rgb(123, 180, 255);
+  border-radius: 5px;
+  font-size: 16px;
+  color: white;
+}
+
+.btn:hover {
+  background-color: rgb(96, 141, 199);
+  border: 1px solid rgb(96, 141, 199);
+}
