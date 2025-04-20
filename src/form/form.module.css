@@ -23,8 +23,17 @@
   font-size: 16px;
   color: white;
 }
+.btn:focus {
+  outline: 1px solid black;
+}
 
 .btn:hover {
   background-color: rgb(96, 141, 199);
   border: 1px solid rgb(96, 141, 199);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  color: rgb(88, 132, 189);
+  pointer-events: none;
 }

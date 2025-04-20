@@ -8,40 +8,40 @@ import css from "/src/app.module.css";
 const API_KEY = "972378369e2ae98bb973947416392c82";
 
 export type CityObjectType = {
-  temp: number | undefined;
-  city: string | undefined;
-  country: string | undefined;
-  sunrise: string | undefined;
-  sunset: string | undefined;
-  error: string | undefined;
+  temp: number;
+  city: string;
+  country: string;
+  sunrise: string;
+  sunset: string;
 };
 
 function App() {
   const [city, setCity] = useState("");
-  const [cityObject, setCityObject] = useState<CityObjectType>({
-    temp: undefined,
-    city: undefined,
-    country: undefined,
-    sunrise: undefined,
-    sunset: undefined,
-    error: undefined,
-  });
+  const [cityObject, setCityObject] = useState<CityObjectType | undefined>(
+    undefined
+  );
+  const [error, setError] = useState("");
 
   const getWeather = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (city) {
-      const apiUrl = await fetch(
+    setError("");
+
+    try {
+      const resp = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
       );
-      const data = await apiUrl.json();
+
+      const data = await resp.json();
+      if (!resp.ok) {
+        throw new Error(data.message);
+      }
+      console.log(data);
 
       const getSunTime = (phenomenonTime: number) => {
-        let phenomenon = phenomenonTime;
+        let phenomenon = phenomenonTime * 1000;
         let date = new Date();
         date.setTime(phenomenon);
-        let sunsetTime =
-          String(date.getHours()) + ":" + String(date.getMinutes());
-        return sunsetTime;
+        return String(date.getHours()) + ":" + String(date.getMinutes());
       };
 
       setCityObject({
@@ -51,20 +51,13 @@ function App() {
         country: data.sys.country,
         sunrise: getSunTime(data.sys.sunrise),
         sunset: getSunTime(data.sys.sunset),
-        error: undefined,
       });
-    } else {
-      setCityObject({
-        ...cityObject,
-        temp: undefined,
-        city: undefined,
-        country: undefined,
-        sunrise: undefined,
-        sunset: undefined,
-        error: "Введите город",
-      });
+    } catch (error) {
+      setError((error as Error).message);
     }
   };
+
+  console.log(cityObject);
 
   return (
     <div className={css.main}>
@@ -73,11 +66,10 @@ function App() {
           getWeatherFn={getWeather}
           inputVal={city}
           onChange={(x) => {
-            if (!x) return;
             setCity(x);
           }}
         />
-        <Weather obj={cityObject} city={city} />
+        {error ? <p>{error}</p> : <Weather obj={cityObject} />}
       </div>
     </div>
   );

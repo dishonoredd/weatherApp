@@ -10,27 +10,28 @@ type FormProps = {
 export const Form = (props: FormProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // const clearInput = () => {
-  //   if (inputRef.current) {
-  //     inputRef.current.value = "";
-  //   }
-  // };
-
   return (
-    <form onSubmit={props.getWeatherFn} className={css.form}>
+    <form
+      onSubmit={(e) => {
+        props.getWeatherFn(e);
+        props.onChange("");
+      }}
+      className={css.form}
+    >
       <input
         className={css.input}
         type="text"
         placeholder="city"
         name="cityInput"
-        // value={props.inputVal}
+        value={props.inputVal}
         ref={inputRef}
         onChange={(e) => {
           props.onChange(e.target.value);
-          // clearInput();
         }}
       />
-      <button className={css.btn}>Get Weather</button>
+      <button disabled={!Boolean(props.inputVal)} className={css.btn}>
+        Get Weather
+      </button>
     </form>
   );
 };

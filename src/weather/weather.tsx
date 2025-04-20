@@ -1,15 +1,13 @@
 import { CityObjectType } from "../App";
 
 type WeatherProps = {
-  obj: CityObjectType;
-  city: string;
+  obj: CityObjectType | undefined;
 };
 
 export const Weather = (props: WeatherProps) => {
   return (
     <>
-      wefwefwefwefewfwef
-      {props.city && (
+      {props.obj && (
         <div>
           <p>Температура: {props.obj.temp}</p>
           <p>Город: {props.obj.city}</p>
@@ -18,7 +16,6 @@ export const Weather = (props: WeatherProps) => {
           <p>Закат: {props.obj.sunset}</p>
         </div>
       )}
-      <p>{props.obj.error}</p>
     </>
   );
 };
